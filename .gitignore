@@ -1,0 +1,55 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+
+# dependencies
+src/main/js/react-app-1/node
+src/main/js/react-app-1/node_modules
+src/main/js/react-app-1/.pnp
+.pnp.js
+
+# testing
+src/main/js/react-app-1/coverage
+
+# production
+src/main/js/react-app-1/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+src/main/js/react-app-1/npm-debug.log*
+src/main/js/react-app-1/yarn-debug.log*
+src/main/js/react-app-1/yarn-error.log*
