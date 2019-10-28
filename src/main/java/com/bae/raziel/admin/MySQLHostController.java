@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@CrossOrigin(origins = "http://test-bae-t1.testdb:8000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/mysqlhost")
 public class MySQLHostController {

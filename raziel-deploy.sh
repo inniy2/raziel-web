@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export T_HOST=test-bae-t1.testdb
+export T_HOST=test-bae-server2.testdb
 
 mvn clean package;
 

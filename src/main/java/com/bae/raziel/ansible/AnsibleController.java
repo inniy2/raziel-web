@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bae.raziel.ghost.GhostDto;
 
-@CrossOrigin(origins = "http://test-bae-t1.testdb:8000")
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/ansible")
 public class AnsibleController {
