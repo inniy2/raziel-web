@@ -54,6 +54,22 @@ const AlterValidationInput = ({
                                     <option value="payment">PAYMENT</option>
                             </select>
                         </div>
+                        
+                        {/* 
+                        <div className="form-group">
+                            <label htmlFor="inputNodeName">Node Name</label>
+                            <select id="inputNodeName" className="form-control"  
+                                name="modalAlterNodeName"  
+                                onChange={actionValueChange}
+                            >
+                                    <option value="default">Choose...</option>
+                                    <option value="test-bae-client1.testdb">test-bae-client1.testdb</option>
+                                    <option value="test-bae-client2.testdb">test-bae-client2.testdb</option>
+                                    <option value="test-bae-client3.testdb">test-bae-client3.testdb</option>
+                            </select>
+                        </div>
+                        */}
+
                         <div className="form-group">
                             <label htmlFor="inputDatabaseName">Database Name</label>
                             <input type="text"  className="form-control" id="inputDatabaseName" placeholder="ex) taxify_company"

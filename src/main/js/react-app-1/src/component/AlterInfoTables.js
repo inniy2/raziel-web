@@ -38,10 +38,11 @@ const AlterInfoTables = ({ actionAddAlterModal, tableDatas }) => {
                 <tbody>
                     {tableDatas.map(item => {
 
-                            var progressStatus = "Unknown";
+                            var progressStatus = "Unknown"
+
                             var createtime = ((item.createTimestamp).replace('T',' ')).slice(0,19)
                             var updatetime = ((item.updateTimestamp).replace('T',' ')).slice(0,19)
-
+                            
                             var timestampSubstract = (new Date(item.updateTimestamp) - new Date(item.createTimestamp)) / 1000 / 60 / 60
                             var etaValue =  Math.round(timestampSubstract * 10 ) /10 
 

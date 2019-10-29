@@ -19,7 +19,7 @@ import Alert from 'react-bootstrap/Alert';
 class App extends Component {
 
     state = {
-        apiBaseUrl: "http://test-bae-server2.testdb:8080/api",
+        apiBaseUrl: "http://localhost:8080/api",
         isLogin: false,
         isLoginModalShow: false,
         isAddAlterMoDalShow: false,
@@ -29,6 +29,7 @@ class App extends Component {
         userPassword: "",
         modalAlterTransactionNo: -1,
         modalAlterShardName: "default",
+        modalAlterNodeName: "default",
         modalAlterDatabaseName: "",
         modalAlterTableName: "",
         modalAlterSyntax: "",
@@ -294,8 +295,52 @@ class App extends Component {
                     
                 })
                 
-    
-    
+                // read-only update
+
+                var updateReadOnly = new XMLHttpRequest()
+
+                updateReadOnly.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateReadOnly')
+                updateReadOnly.setRequestHeader('Content-Type', 'application/json')
+                updateReadOnly.send(JSON.stringify({ 
+                    "clusterName" : this.state.modalAlterShardName
+                }))
+
+                updateReadOnly.addEventListener('load', () => {
+                    console.log("addEventListener message : " + updateReadOnly.responseText)
+                    var returnObj = JSON.parse(updateReadOnly.responseText)
+                    
+                    if(dryrun.status === 200){
+                        console.log("read-only update successful.")
+                    }
+                    
+                })
+
+
+                // ghost host update
+                /*
+                if(this.state.modalAlterNodeName != "default"){
+                    var updateGhostHost = new XMLHttpRequest()
+                    updateGhostHost.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateGhostHost')
+                    updateGhostHost.setRequestHeader('Content-Type', 'application/json')
+                    updateGhostHost.send(JSON.stringify({ 
+                        "clusterName" : this.state.modalAlterShardName,
+                        "hostName" : this.state.modalAlterNodeName,
+                        "hostType" : 3
+                    }))
+
+                    updateGhostHost.addEventListener('load', () => {
+                        console.log("addEventListener message : " + updateGhostHost.responseText)
+                        var returnObj = JSON.parse(updateGhostHost.responseText)
+                        
+                        if(updateGhostHost.status === 200){
+                            console.log("Ghost host update successful.")
+                        }
+                        
+                    })
+                }
+                */
+
+                
                 // Dry run
                 
                 var dryrun = new XMLHttpRequest()

@@ -53,3 +53,12 @@ src/main/js/react-app-1/build
 src/main/js/react-app-1/npm-debug.log*
 src/main/js/react-app-1/yarn-debug.log*
 src/main/js/react-app-1/yarn-error.log*
+
+
+# Ignore addination configure files
+ansible.cfg
+hosts
+debian.cnf
+pom.local
+pom.server
+
