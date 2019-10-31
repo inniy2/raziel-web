@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 const AlterValidationInput = ({ 
     renderAlterExecute,
     ansibleData,
+    ghostNodeList,
     dryrunData,
     actionValueChange
     }) => {
@@ -54,21 +55,23 @@ const AlterValidationInput = ({
                                     <option value="payment">PAYMENT</option>
                             </select>
                         </div>
-                        
-                        {/* 
+
                         <div className="form-group">
-                            <label htmlFor="inputNodeName">Node Name</label>
+                            <label htmlFor="inputNodeName">Ghost Node Name</label>
                             <select id="inputNodeName" className="form-control"  
                                 name="modalAlterNodeName"  
                                 onChange={actionValueChange}
                             >
-                                    <option value="default">Choose...</option>
-                                    <option value="test-bae-client1.testdb">test-bae-client1.testdb</option>
-                                    <option value="test-bae-client2.testdb">test-bae-client2.testdb</option>
-                                    <option value="test-bae-client3.testdb">test-bae-client3.testdb</option>
+                                <option value="default">Choose...</option>
+                                {ghostNodeList.map(item => {
+                                    return <option value={item}>
+                                            {item}
+                                            </option>
+                                })}
+                                    
+                                    
                             </select>
-                        </div>
-                        */}
+                        </div>       
 
                         <div className="form-group">
                             <label htmlFor="inputDatabaseName">Database Name</label>
@@ -128,7 +131,7 @@ const AlterValidationInput = ({
             </div>
 
 
-            {/* Sansible result */}
+            {/* ansible result */}
 
             <div className="card card-outline-secondary my-4">
                 <div className="card-header">
@@ -146,7 +149,7 @@ const AlterValidationInput = ({
             </div>
 
 
-            {/* Sansible result */}
+            {/* Dry run result */}
 
             <div className="card card-outline-secondary my-4">
                 <div className="card-header">
@@ -181,6 +184,7 @@ const AlterValidationInput = ({
 AlterValidationInput.propTypes = {
     renderAlterExecute: PropTypes.func.isRequired,
     ansibleData: PropTypes.array.isRequired,
+    ghostNodeList: PropTypes.array.isRequired,
     dryrunData: PropTypes.array.isRequired,
     actionValueChange: PropTypes.func.isRequired
 }

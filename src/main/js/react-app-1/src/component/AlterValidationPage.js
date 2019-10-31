@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import AlterValidationInput from './AlterValidationInput';
 
 
-const AlterValidationPage = ({ renderAlterExecute, ansibleData, dryrunData, actionValueChange }) => {
+const AlterValidationPage = ({ renderAlterExecute, ansibleData, ghostNodeList, dryrunData, actionValueChange }) => {
     
     return(
         <div>
             <AlterValidationInput
                 renderAlterExecute={renderAlterExecute}
                 ansibleData={ansibleData}
+                ghostNodeList={ghostNodeList}
                 dryrunData={dryrunData}
                 actionValueChange={actionValueChange}
             />
@@ -19,6 +20,7 @@ const AlterValidationPage = ({ renderAlterExecute, ansibleData, dryrunData, acti
 AlterValidationPage.propTypes = {
     renderAlterExecute: PropTypes.func.isRequired,
     ansibleData: PropTypes.array.isRequired,
+    ghostNodeList: PropTypes.array.isRequired,
     dryrunData: PropTypes.array.isRequired,
     actionValueChange: PropTypes.func.isRequired,
 }

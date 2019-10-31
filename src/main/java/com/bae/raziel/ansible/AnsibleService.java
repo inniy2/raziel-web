@@ -2,6 +2,7 @@ package com.bae.raziel.ansible;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,11 +57,21 @@ public class AnsibleService {
 	
 	public List<String> find( GhostDto ghostDto){
 		
+		logger.debug("----------------------------------- GhostDto input debug -------------------------------");
+		logger.debug(ghostDto.toString());
+		logger.debug("----------------------------------- GhostDto input debug -------------------------------");
 		
 		List<String> resultList = new ArrayList<String>();
 		
 		
 		List<MySQLHostEntity> mySQLHostEntityList = mySQLHostRepository.findAllMySQLHostByClusterName(ghostDto.getClusterName());
+		
+		
+		logger.debug("----------------------------------- GhostDto input debug -------------------------------");
+		logger.debug("Cluster nodes is empty? : " + mySQLHostEntityList.isEmpty());
+		logger.debug("Cluster nodes size? : "     + mySQLHostEntityList.size());
+		logger.debug("----------------------------------- GhostDto input debug -------------------------------");
+		
 		
 		/*
 		 * Find hosts has type is 3 ( ghost host )
@@ -136,6 +147,13 @@ public class AnsibleService {
 				+"df /mysql",                         // 8
 				
 		};
+		
+		logger.info("------------------------------------------- Ansible log");
+		
+		List<String> findDiskUsageList = Arrays.asList(findDiskUsage);
+		
+		findDiskUsageList.forEach(e -> logger.info(e.toString()));
+		
 		
 		List<String> ansibleResult =  ansibleComponent.find(findDiskUsage);
 		

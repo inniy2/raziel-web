@@ -36,6 +36,7 @@ class App extends Component {
         modalAlterDate: "",
         modalAlterHour: "",
         ansibleData:[],
+        ghostNodeList:["test-bae-client1.testdb","test-bae-client2.testdb","test-bae-client3.testdb"],
         tableDatas: [
             /*
             {
@@ -237,7 +238,7 @@ class App extends Component {
 
 
             
-        } else if (name === 'addAlterTableSubmitButton'){
+        }else if (name === 'addAlterTableSubmitButton'){
             // click add alter table  submit
             // TO-DO Later call api
             
@@ -295,50 +296,6 @@ class App extends Component {
                     
                 })
                 
-                // read-only update
-
-                var updateReadOnly = new XMLHttpRequest()
-
-                updateReadOnly.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateReadOnly')
-                updateReadOnly.setRequestHeader('Content-Type', 'application/json')
-                updateReadOnly.send(JSON.stringify({ 
-                    "clusterName" : this.state.modalAlterShardName
-                }))
-
-                updateReadOnly.addEventListener('load', () => {
-                    console.log("addEventListener message : " + updateReadOnly.responseText)
-                    var returnObj = JSON.parse(updateReadOnly.responseText)
-                    
-                    if(dryrun.status === 200){
-                        console.log("read-only update successful.")
-                    }
-                    
-                })
-
-
-                // ghost host update
-                /*
-                if(this.state.modalAlterNodeName != "default"){
-                    var updateGhostHost = new XMLHttpRequest()
-                    updateGhostHost.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateGhostHost')
-                    updateGhostHost.setRequestHeader('Content-Type', 'application/json')
-                    updateGhostHost.send(JSON.stringify({ 
-                        "clusterName" : this.state.modalAlterShardName,
-                        "hostName" : this.state.modalAlterNodeName,
-                        "hostType" : 3
-                    }))
-
-                    updateGhostHost.addEventListener('load', () => {
-                        console.log("addEventListener message : " + updateGhostHost.responseText)
-                        var returnObj = JSON.parse(updateGhostHost.responseText)
-                        
-                        if(updateGhostHost.status === 200){
-                            console.log("Ghost host update successful.")
-                        }
-                        
-                    })
-                }
-                */
 
                 
                 // Dry run
@@ -381,6 +338,32 @@ class App extends Component {
 
             
 
+        }else if (name === 'modalAlterShardName'){
+
+            this.setState({
+                [ name ]: value
+            })
+
+            // read-only update
+
+            var updateReadOnly = new XMLHttpRequest()
+
+            updateReadOnly.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateReadOnly')
+            updateReadOnly.setRequestHeader('Content-Type', 'application/json')
+            updateReadOnly.send(JSON.stringify({ 
+                "clusterName" : value
+            }))
+
+            updateReadOnly.addEventListener('load', () => {
+                console.log("addEventListener message : " + updateReadOnly.responseText)
+                var returnObj = JSON.parse(updateReadOnly.responseText)
+                
+                if(updateReadOnly.status === 200){
+                    console.log("read-only update successful.")
+                }
+                
+            })
+
         }else if (name === 'ExecuteSubmitButton'){
 
             // Execute Alter
@@ -422,6 +405,41 @@ class App extends Component {
 
 
 
+
+
+        }else if (name === 'modalAlterNodeName'){
+
+            // ghost host update
+            /*
+            * if this.state.modalAlterShardName is  'default', this choose gh-ost node will
+            * update the mysql_host table with 'default'
+            * which make wrong data
+            */
+            if( this.state.modalAlterShardName != 'default' && value != "default"){
+
+
+                var updateGhostHost = new XMLHttpRequest()
+
+                updateGhostHost.open('POST', this.state.apiBaseUrl+'/mysqlhost/updateGhostHost')
+                updateGhostHost.setRequestHeader('Content-Type', 'application/json')
+
+                updateGhostHost.send(JSON.stringify({ 
+                    "clusterName" : this.state.modalAlterShardName,
+                    "hostName" : value,
+                    "hostType" : 3
+                }))  
+
+                updateGhostHost.addEventListener('load', () => {
+                    console.log("addEventListener message : " + updateGhostHost.responseText)
+                    var returnObj = JSON.parse(updateGhostHost.responseText)
+
+                    if(updateGhostHost.status === 200){
+                        console.log("Ghost host update successful.")
+                    }
+
+                })
+
+            }
 
 
         }else {
@@ -668,6 +686,7 @@ class App extends Component {
                                 <Route path='/validation' render={(props) => <AlterValidationPage {...props}
                                     renderAlterExecute={this.renderAlterExecute}
                                     ansibleData={this.state.ansibleData}
+                                    ghostNodeList={this.state.ghostNodeList}
                                     dryrunData={this.state.dryrunData} 
                                     actionValueChange={this.actionValueChange}
                                 />}   exact/>
