@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "raziel_user")
-public class LoginEntity {
+public class RazielUserEntity {
 	
 	
 	@Id

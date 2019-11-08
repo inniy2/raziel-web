@@ -15,11 +15,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bae.raziel.component.GhostComponent;
-import com.bae.raziel.entity.GhostEntity;
+import com.bae.raziel.entity.AlterHistEntity;
 import com.bae.raziel.entity.MySQLEntity;
 import com.bae.raziel.entity.MySQLHostEntity;
 import com.bae.raziel.model.GhostModel;
-import com.bae.raziel.repository.GhostRepository;
+import com.bae.raziel.repository.AlterHistRepository;
 import com.bae.raziel.repository.MySQLHostRepository;
 import com.bae.raziel.repository.TargetMySQLRepository;
 
@@ -37,7 +37,7 @@ public class GhostService {
 	
 	
 	@Autowired
-	GhostRepository ghostRepository;
+	AlterHistRepository ghostRepository;
 	
 	/*
 	 * To get ghost host name & check replica list
@@ -130,7 +130,7 @@ public class GhostService {
 		
 		List<GhostModel> ghostDtoList = new ArrayList<GhostModel>();
 		
-		List<GhostEntity> ghostEntityList = ghostRepository.findAll();
+		List<AlterHistEntity> ghostEntityList = ghostRepository.findAll();
 		
 		ghostEntityList.forEach(e -> ghostDtoList.add(this.mapToGhostDto(e, ghostEntityList.indexOf(e))));
 		
@@ -143,7 +143,7 @@ public class GhostService {
 		
 		List<GhostModel> ghostDtoList = new ArrayList<GhostModel>();
 		
-		List<GhostEntity> ghostEntityList = ghostRepository.findHistoryAllByProgressStatus(ghostDto.getProgressStatus());
+		List<AlterHistEntity> ghostEntityList = ghostRepository.findHistoryAllByProgressStatus(ghostDto.getProgressStatus());
 		
 		ghostEntityList.forEach(e -> ghostDtoList.add(this.mapToGhostDto(e, ghostEntityList.indexOf(e))));
 		
@@ -251,7 +251,7 @@ public class GhostService {
 		/*
 		 * read
 		 */
-		GhostEntity ghostEntity = ghostRepository.findHistoryByPrimary(model.getTableName(),model.getClusterName(),model.getTableSchema());
+		AlterHistEntity ghostEntity = ghostRepository.findHistoryByPrimary(model.getTableName(),model.getClusterName(),model.getTableSchema());
 		
 		
 		
@@ -389,7 +389,7 @@ public class GhostService {
 	}
 	
 	
-	private GhostModel mapToGhostDto(GhostEntity ghostEntity, int orderId) {
+	private GhostModel mapToGhostDto(AlterHistEntity ghostEntity, int orderId) {
 		
 		GhostModel ghostDto = null;
 		
@@ -413,12 +413,12 @@ public class GhostService {
 	}
 	
 	
-	private GhostEntity mapToGhostEntity(GhostModel ghostDto) {
+	private AlterHistEntity mapToGhostEntity(GhostModel ghostDto) {
 		
-		GhostEntity ghostEntity = null;
+		AlterHistEntity ghostEntity = null;
 
 		if( ghostDto != null ) {
-			ghostEntity = new GhostEntity();
+			ghostEntity = new AlterHistEntity();
 			ghostEntity.setClusterName(ghostDto.getClusterName());
 			ghostEntity.setTableSchema(ghostDto.getTableSchema());
 			ghostEntity.setTableName(ghostDto.getTableName());

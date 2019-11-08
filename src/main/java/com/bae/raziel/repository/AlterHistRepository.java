@@ -9,28 +9,28 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bae.raziel.entity.GhostEntity;
+import com.bae.raziel.entity.AlterHistEntity;
 
 import org.springframework.data.jpa.repository.Query;
 
 @Repository
-public interface GhostRepository extends JpaRepository<GhostEntity, Long>{
+public interface AlterHistRepository extends JpaRepository<AlterHistEntity, Long>{
 	
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT a FROM GhostEntity a WHERE a.tableName = ?1 and a.clusterName = ?2 and a.tableSchema = ?3")
-	GhostEntity findHistoryByPrimary (String tableName, String clusterName, String tableSchema);
+	AlterHistEntity findHistoryByPrimary (String tableName, String clusterName, String tableSchema);
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT a FROM GhostEntity a WHERE a.progressStatus = ?1")
-	List<GhostEntity> findHistoryAllByProgressStatus (int progressStatus );
+	List<AlterHistEntity> findHistoryAllByProgressStatus (int progressStatus );
 	
 	
 	
 	
 	@Transactional(readOnly = true)
 	@Query("SELECT a FROM GhostEntity a WHERE a.tableName = ?1 and a.clusterName = ?2 and a.tableSchema = ?3 and a.progressStatus = ?4")
-	GhostEntity findHistoryByProgressStatus (String tableName, String clusterName, String tableSchema, int progressStatus );
+	AlterHistEntity findHistoryByProgressStatus (String tableName, String clusterName, String tableSchema, int progressStatus );
 	
 
 	

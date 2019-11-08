@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.bae.raziel.entity.LoginEntity;
+import com.bae.raziel.entity.RazielUserEntity;
 import com.bae.raziel.model.LoginModel;
 
 @Component
@@ -20,12 +20,12 @@ public class LoginComponent {
 		return new LoginModel();
 	} 
 	
-	public List<LoginEntity> getLoginEntityList(){
-		return new ArrayList<LoginEntity>();
+	public List<RazielUserEntity> getLoginEntityList(){
+		return new ArrayList<RazielUserEntity>();
 	} 
 	
-	public LoginEntity getLoginEntity(){
-		return new LoginEntity();
+	public RazielUserEntity getLoginEntity(){
+		return new RazielUserEntity();
 	} 
 
 }

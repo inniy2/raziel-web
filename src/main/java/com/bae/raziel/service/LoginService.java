@@ -14,9 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bae.raziel.component.LoginComponent;
-import com.bae.raziel.entity.LoginEntity;
+import com.bae.raziel.entity.RazielUserEntity;
 import com.bae.raziel.model.LoginModel;
-import com.bae.raziel.repository.LoginRepository;
+import com.bae.raziel.repository.RazielUserRepository;
 
 
 
@@ -28,7 +28,7 @@ public class LoginService {
 
 	
 	@Autowired
-	LoginRepository loginRepository;
+	RazielUserRepository loginRepository;
 	
 	@Autowired
 	LoginComponent loginComponent;
@@ -36,7 +36,7 @@ public class LoginService {
 	
 	public LoginModel login(LoginModel loginModel){
 		
-		Optional<LoginEntity> loginEntity = loginRepository.findById(loginModel.getRazielUser());		
+		Optional<RazielUserEntity> loginEntity = loginRepository.findById(loginModel.getRazielUser());		
 		
 		if(loginEntity.isPresent()) {
 			if(loginEntity.get().getRazielPassword().equals(loginModel.getRazielPassword())){
@@ -56,10 +56,10 @@ public class LoginService {
 	
 	public void save(List<LoginModel> loginModels) {
 		
-		List<LoginEntity> loginEntities = loginComponent.getLoginEntityList();
+		List<RazielUserEntity> loginEntities = loginComponent.getLoginEntityList();
 
 		loginModels.forEach(e -> {
-			LoginEntity loginEntity = loginComponent.getLoginEntity();
+			RazielUserEntity loginEntity = loginComponent.getLoginEntity();
 			loginEntity.setRazielUser(e.getRazielUser());
 			loginEntity.setRazielPassword(e.getRazielPassword());
 			loginEntities.add(loginEntity);
@@ -71,7 +71,7 @@ public class LoginService {
 	
 	public List<LoginModel> findAll(){
 		
-		List<LoginEntity> loginEntities = loginRepository.findAll();
+		List<RazielUserEntity> loginEntities = loginRepository.findAll();
 		List<LoginModel> loginModels = loginComponent.getLoginModelList();
 		
 		loginEntities.forEach(e -> {

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.bae.raziel.component.MySQLHostComponent;
-import com.bae.raziel.entity.LoginEntity;
+import com.bae.raziel.entity.RazielUserEntity;
 import com.bae.raziel.entity.MySQLEntity;
 import com.bae.raziel.entity.MySQLHostEntity;
 import com.bae.raziel.model.LoginModel;

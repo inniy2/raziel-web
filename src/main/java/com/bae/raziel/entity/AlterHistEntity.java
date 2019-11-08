@@ -18,7 +18,7 @@ import com.bae.raziel.multipk.GhostEntityId;
 @Entity
 @IdClass(GhostEntityId.class)
 @Table(name = "alter_history")
-public class GhostEntity {
+public class AlterHistEntity {
 
 	@Id
 	@Column(name = "cluster_name", nullable = false)
