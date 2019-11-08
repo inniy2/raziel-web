@@ -19,7 +19,7 @@ import Alert from 'react-bootstrap/Alert';
 class App extends Component {
 
     state = {
-        apiBaseUrl: "http://localhost:8080/api",
+        apiBaseUrl: "http://localhost:8080",
         isLogin: false,
         isLoginModalShow: false,
         isAddAlterMoDalShow: false,
