@@ -2,16 +2,27 @@ package com.bae.raziel.multipk;
 
 import java.io.Serializable;
 
-public class GhostEntityId  implements Serializable {
+public class AlterStatusEntityId  implements Serializable {
 
 	private String tableName;
 	private String clusterName;
 	private String tableSchema;
 	
-	public GhostEntityId() {
+	public AlterStatusEntityId() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public AlterStatusEntityId(String tableName, String clusterName, String tableSchema) {
+		super();
+		this.tableName = tableName;
+		this.clusterName = clusterName;
+		this.tableSchema = tableSchema;
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -31,7 +42,7 @@ public class GhostEntityId  implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GhostEntityId other = (GhostEntityId) obj;
+		AlterStatusEntityId other = (AlterStatusEntityId) obj;
 		if (clusterName == null) {
 			if (other.clusterName != null)
 				return false;

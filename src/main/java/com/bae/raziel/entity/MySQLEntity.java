@@ -15,13 +15,7 @@ public class MySQLEntity {
 	
 	private String readOnly;
 	
-	/*
-	 * GHC
-	 */
-	private long id;
-	private Timestamp lastUpdate;
-	private String hint;
-	private String value;
+	
 	
 	
 	public String getHostName() {
@@ -78,32 +72,6 @@ public class MySQLEntity {
 	}
 	
 	
-	
-	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public Timestamp getLastUpdate() {
-		return lastUpdate;
-	}
-	public void setLastUpdate(Timestamp lastUpdate) {
-		this.lastUpdate = lastUpdate;
-	}
-	public String getHint() {
-		return hint;
-	}
-	public void setHint(String hint) {
-		this.hint = hint;
-	}
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
 	/*
 	 * Use it in AnsibleService
 	 * 

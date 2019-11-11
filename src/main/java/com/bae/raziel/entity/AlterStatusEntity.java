@@ -8,54 +8,59 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
+import com.bae.raziel.multipk.AlterStatusEntityId;
 
 
 
 @Entity
-@Table(name = "alter_history")
-public class AlterHistEntity {
+@IdClass(AlterStatusEntityId.class)
+@Table(name = "alter_status")
+public class AlterStatusEntity {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id;
-	
 	@Column(name = "cluster_name", nullable = false)
 	private String clusterName;
 	
+	@Id
 	@Column(name = "table_schema", nullable = false)
 	private String tableSchema;
 	
+	@Id
 	@Column(name = "table_name", nullable = false)
 	private String tableName;
 	
+	
+	
 	@Column(name = "ghost_host_name", nullable = false)
 	private String ghostHostName;
+	
 	/*
 	@Column(name = "check_replica_list", nullable = false)
 	private ArrayList<String> checkReplicaList;
 	
 	@Column(name = "alter_statement", nullable = false)
 	private ArrayList<String> alterStatement;
-	*/	
+	*/
+	/*
+	@Column(name = "progress_status", nullable = false)
+	private int progressStatus;
+	*/
+	
 	@Column(name = "register_email", nullable = false)
 	private String registerEmail;
 	
 	@Column(name = "register_timestamp", nullable = true)
 	private Timestamp registerTimestamp;
+
+	/*
+	@Column(name = "update_timestamp", nullable = true)
+	private Timestamp updateTimestamp;
+    */
 	
-	@Column(name = "create_timestamp", nullable = true)
-	private Timestamp createTimestamp;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
+	
 	public String getClusterName() {
 		return clusterName;
 	}
@@ -112,6 +117,7 @@ public class AlterHistEntity {
 		this.registerEmail = registerEmail;
 	}
 
+	
 	public Timestamp getRegisterTimestamp() {
 		return registerTimestamp;
 	}
@@ -119,23 +125,17 @@ public class AlterHistEntity {
 	public void setRegisterTimestamp(Timestamp registerTimestamp) {
 		this.registerTimestamp = registerTimestamp;
 	}
-
-	public Timestamp getCreateTimestamp() {
-		return createTimestamp;
-	}
-
-	public void setCreateTimestamp(Timestamp createTimestamp) {
-		this.createTimestamp = createTimestamp;
-	}
 /*
 	@Override
 	public String toString() {
-		return "AlterHistEntity [id=" + id + ", clusterName=" + clusterName + ", tableSchema=" + tableSchema
-				+ ", tableName=" + tableName + ", ghostHostName=" + ghostHostName + ", checkReplicaList="
-				+ checkReplicaList + ", alterStatement=" + alterStatement + ", registerEmail=" + registerEmail
-				+ ", registerTimestamp=" + registerTimestamp + ", createTimestamp=" + createTimestamp + "]";
+		return "AlterStatusEntity [clusterName=" + clusterName + ", tableSchema=" + tableSchema + ", tableName="
+				+ tableName + ", ghostHostName=" + ghostHostName + ", checkReplicaList=" + checkReplicaList
+				+ ", alterStatement=" + alterStatement + ", registerEmail=" + registerEmail + ", registerTimestamp="
+				+ registerTimestamp + "]";
 	}
 */
+	
+
 	
 	
 }

@@ -3,6 +3,7 @@ package com.bae.raziel.component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,9 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.apache.commons.lang.ArrayUtils;
+
+import com.bae.raziel.entity.AlterHistEntity;
 
 import com.bae.raziel.model.GhostModel;
 
@@ -22,8 +26,8 @@ public class GhostComponent {
 	private static final Logger logger = LoggerFactory.getLogger(GhostComponent.class);
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-	String[] ghostRunComand = new String[] {
-			"gh-ost",                                    // 0
+	String[] ghostRunComandTmplate = new String[] {
+			"/Users/baesangsun/bin/gh-ost",              // 0
 			"--max-load=Threads_running=50",             // 1
 			"--critical-load=Threads_running=1500",      // 2
 			"--chunk-size=500",                          // 3
@@ -36,11 +40,12 @@ public class GhostComponent {
 			"--alter=",                                  // 10
 			"--switch-to-rbr",                           // 11
 			"--cut-over=default",                        // 12
-			"--exact-rowcount",                          // 13
-			"--concurrent-rowcount",                     // 14
-			"--default-retries=120",                     // 15
-			"--timestamp-old-table",                     // 16
-			""                                           // 17
+			"--postpone-cut-over-flag-file=/tmp/ghost.postpone.flag", // 13
+			"--exact-rowcount",                          // 14
+			"--concurrent-rowcount",                     // 15
+			"--default-retries=120",                     // 16
+			"--timestamp-old-table",                     // 17
+			""                                           // 18
 	};
 	
 	
@@ -50,7 +55,11 @@ public class GhostComponent {
 	}
 	
 	
-	public List<String> ghostRun(GhostModel model, String verbose) {
+	
+	
+	public List<String> ghostRun(GhostModel model, String verbose, boolean cutOver) {
+		
+		String[] ghostRunComand = ghostRunComandTmplate;
 		
 		StringBuilder database      = new StringBuilder("--database=");
 		StringBuilder host          = new StringBuilder("--host=");
@@ -59,7 +68,7 @@ public class GhostComponent {
 		StringBuilder checkReplica  = new StringBuilder("--throttle-control-replicas=");
 		
 		
-		logger.debug("cmd option length: "+ghostRunComand.length);
+		
 		
 		/*
 		 * database
@@ -104,12 +113,16 @@ public class GhostComponent {
 			}else if (i == 9) { ghostRunComand[i] = table.toString();
 			}else if (i == 7) { ghostRunComand[i] = checkReplica.toString();
 			}else if (i == 10){ ghostRunComand[i] = alterStatment.toString();
-			}else if (i == 17){ ghostRunComand[i] = verbose;
+			}else if (i == 18){ ghostRunComand[i] = verbose;
 			}
 		
 			logger.info(ghostRunComand[i]);
 		}
 		
+		ghostRunComand = (!cutOver)?(String[]) ArrayUtils.remove(ghostRunComand, 13):ghostRunComand;
+	
+		logger.debug("cmd option length: "+ghostRunComand.length);
+		logger.debug("cut over : "+cutOver);
 		
 		List<String> dryRunCpml = this.runProcess(ghostRunComand);
 		
@@ -209,6 +222,51 @@ public class GhostComponent {
 		
 		
 	}
+
+
+
+
+	public List<GhostModel> getModels() {
+		// TODO Auto-generated method stub
+		return new ArrayList<GhostModel>();
+	}
+
+
+
+
+	public GhostModel getModel() {
+		// TODO Auto-generated method stub
+		return new GhostModel();
+	}
+	
+	
+	
+	
+
+
+
+	public AlterHistEntity getAlterHistEntity() {
+		// TODO Auto-generated method stub
+		return new AlterHistEntity();
+	}
+
+
+
+
+	public boolean isValidateTableName(String tableName) {
+		
+		String prefix = String.valueOf((tableName.charAt(0)));
+		String postfix = tableName.substring(tableName.length() - 4, tableName.length());
+		
+		logger.debug("prefix : " + prefix);
+		logger.debug("postfix : " + postfix);
+		
+		return (prefix.equals("_") && ( postfix.equals("_ghc") || postfix.equals("_gho") ));
+	}
+
+
+
+
 	
 	
 }

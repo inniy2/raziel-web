@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bae.raziel.entity.RazielUserEntity;
 import com.bae.raziel.model.LoginModel;
 import com.bae.raziel.service.LoginService;
 

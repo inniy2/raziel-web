@@ -114,7 +114,7 @@ public class AnsibleService {
 		 * Read disk usage from ghost host by ansible
 		 */
 		String[] findDiskUsage = new String[] {
-				"ansible",                            // 0
+				"/usr/local/bin/ansible",                            // 0
 				"-i",                                 // 1
 				"hosts",                              // 2
 				ghostEntity.getClusterName(),         // 3

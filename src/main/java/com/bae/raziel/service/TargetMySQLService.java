@@ -34,6 +34,12 @@ public class TargetMySQLService {
 		
 		return model;
 	}
+	
+	public MySQLEntity getReadOnly(String hostName, int port) {
+		
+		return targetMySQLRepository.getReadOnly(hostName, port);
+		
+	}
 
 	public List<TargetMySQLModel> getTableInfo(@Valid TargetMySQLModel model) {
 		

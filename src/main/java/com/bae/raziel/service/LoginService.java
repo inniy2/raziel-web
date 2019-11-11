@@ -71,6 +71,7 @@ public class LoginService {
 	
 	public List<LoginModel> findAll(){
 		
+		
 		List<RazielUserEntity> loginEntities = loginRepository.findAll();
 		List<LoginModel> loginModels = loginComponent.getLoginModelList();
 		
@@ -82,6 +83,8 @@ public class LoginService {
 		});
 		
 		return loginModels;
+		
+		
 	}
 
 
