@@ -1,9 +1,17 @@
 package com.bae.raziel.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +23,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.bae.raziel.component.EntityManagerComponent;
 import com.bae.raziel.component.GhostComponent;
+import com.bae.raziel.domain.AlterCount;
 import com.bae.raziel.domain.TableInfo;
 import com.bae.raziel.entity.AlterHistEntity;
 import com.bae.raziel.entity.AlterStatusEntity;
@@ -35,6 +45,7 @@ public class GhostService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GhostService.class);
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+	
 	
 	@Autowired
 	TargetMySQLService targetMySQLHostService;
@@ -61,6 +72,13 @@ public class GhostService {
 	 */
 	@Autowired
 	TargetMySQLRepository targetMySQLRepository;
+	
+	
+	/*
+	 * When need to use custom SQL
+	 */
+	@Autowired
+	EntityManagerComponent entityManagerComponent;
 	
 	
 	@Value("${console.mysql.user}")
@@ -351,6 +369,20 @@ public class GhostService {
 		
 		alterStatusRepository.save(entity);
 		
+		/*
+		 * Set MySQL host by clusterName
+		 */
+		List<MySQLHostEntity> entities = mySQLHostRepository.findAllMySQLHostByClusterName(model.getClusterName());
+		
+		/*
+		 * Find hosts has type is 2 ( slaves )
+		 */
+		List<String> checkReplicaList = entities.stream()
+				.filter(e -> e.getHostType() == 2 )
+				.map(q -> q.getMysqlHostName())
+				.collect(Collectors.toList());
+		
+		if(model.getCheckReplicaList() == null) model.setCheckReplicaList((ArrayList<String>)checkReplicaList);
 		
 		/*
 		 * Execute
@@ -440,6 +472,12 @@ public class GhostService {
 		
 		return rtn.toString();
 		
+	}
+
+
+
+	public List<AlterCount> findAlterHistByDay(@Valid String day) {
+		return entityManagerComponent.findAlterHistByDay(day);
 	}
 	
 	

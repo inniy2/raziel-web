@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bae.raziel.domain.AlterCount;
 import com.bae.raziel.entity.AlterHistEntity;
 import com.bae.raziel.entity.AlterStatusEntity;
 import com.bae.raziel.entity.MySQLEntity;
@@ -40,7 +42,7 @@ public class GhostController {
 	 * ghostHostName
 	 * checkReplicaList
 	 * tableName
-	 * TableSchema
+	 * tableSchema
 	 * alterStatement
 	 * cutOver
 	 */
@@ -58,6 +60,7 @@ public class GhostController {
 	 * tableName
 	 * TableSchema
 	 * cutOver
+	 * registerEmail
 	 */
 	@PostMapping("/execute")
 	public String execute(@Valid @RequestBody GhostModel model){
@@ -76,6 +79,11 @@ public class GhostController {
 		return ghostService.findAlterHistAll();
 	}
 	
+	@GetMapping("/findAlterHistByDay")
+	public List<AlterCount> findAlterHistByDay(@Valid @RequestParam String day){
+		return ghostService.findAlterHistByDay(day);
+	}
+	
 	@PostMapping("/dropShadowTable")
 	public String dropShadowTable(@Valid @RequestBody GhostModel model) {
 		String clusterName = model.getClusterName();
@@ -91,6 +99,7 @@ public class GhostController {
 		String tableName = model.getTableName();
 		return ghostService.progress(clusterName, tableSchema, tableName);
 	}
+	
 	
 	
 	/*

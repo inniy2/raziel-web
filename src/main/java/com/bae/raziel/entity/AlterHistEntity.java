@@ -47,7 +47,7 @@ public class AlterHistEntity {
 	
 	@Column(name = "create_timestamp", nullable = true)
 	private Timestamp createTimestamp;
-
+	
 	public long getId() {
 		return id;
 	}
@@ -127,6 +127,8 @@ public class AlterHistEntity {
 	public void setCreateTimestamp(Timestamp createTimestamp) {
 		this.createTimestamp = createTimestamp;
 	}
+	
+	
 /*
 	@Override
 	public String toString() {

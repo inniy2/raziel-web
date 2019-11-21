@@ -36,15 +36,7 @@ ghost_host_name,
 register_email,
 register_timestamp,
 create_timestamp
-) values (
-100000000,
-'dummy-cluster',
-'dummy-database',
-'dummy_tbl1',
-'dummy-bae-client1.testdb',
--- '',
--- '',
-'dummy@bolt.eu',
-'2019-11-07 12:00:00',
-'2019-11-08 13:00:00'
-);
+-- ) values (100000000,'dummy-cluster','dummy-database','dummy_tbl1','dummy-bae-client1.testdb','','','dummy@bolt.eu','2019-11-07 12:00:00','2019-11-08 13:00:00');
+) values (100000000,'dummy-cluster','dummy-database','dummy_tbl1','dummy-bae-client1.testdb','dummy@bolt.eu','2019-11-07 12:00:00','2019-11-08 13:00:00'),
+         (100000001,'dummy-cluster','dummy-database','dummy_tbl1','dummy-bae-client1.testdb','dummy@bolt.eu','2019-11-20 12:00:00','2019-11-08 13:00:00'),
+         (100000002,'dummy-cluster','dummy-database','dummy_tbl1','dummy-bae-client1.testdb','dummy@bolt.eu','2019-11-20 12:10:00','2019-11-08 13:00:00');

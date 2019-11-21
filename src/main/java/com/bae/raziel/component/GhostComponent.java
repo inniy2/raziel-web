@@ -27,7 +27,7 @@ public class GhostComponent {
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 	String[] ghostRunComandTmplate = new String[] {
-			"/Users/baesangsun/bin/gh-ost",              // 0
+			"gh-ost",                                    // 0
 			"--max-load=Threads_running=50",             // 1
 			"--critical-load=Threads_running=1500",      // 2
 			"--chunk-size=500",                          // 3
