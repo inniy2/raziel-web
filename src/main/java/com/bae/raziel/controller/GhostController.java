@@ -100,6 +100,14 @@ public class GhostController {
 		return ghostService.progress(clusterName, tableSchema, tableName);
 	}
 	
+	@PostMapping("/checkErrors")
+	public List<GhcModel> checkErrors(@Valid @RequestBody GhostModel model) {
+		String clusterName = model.getClusterName();
+		String tableSchema = model.getTableSchema();
+		String tableName = model.getTableName();
+		return ghostService.checkErrors(clusterName, tableSchema, tableName);
+	}
+	
 	
 	
 	/*

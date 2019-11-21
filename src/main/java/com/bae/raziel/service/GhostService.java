@@ -479,6 +479,56 @@ public class GhostService {
 	public List<AlterCount> findAlterHistByDay(@Valid String day) {
 		return entityManagerComponent.findAlterHistByDay(day);
 	}
+
+
+
+	public List<GhcModel> checkErrors(String clusterName, String tableSchema, String tableName) {
+		
+		
+		List<MySQLHostEntity> entities = mySQLHostRepository.findAllMySQLHostByClusterName(clusterName);
+	
+		/*
+		 * Find hosts has type is 3 ( ghost host )
+		 */
+	
+		boolean isGhostHostSelected = entities.stream()
+				.anyMatch(e -> e.getHostType() == 3);
+		
+		String ghostHostName = null;
+		
+		if(isGhostHostSelected) {
+			ghostHostName = entities.stream()
+					.filter(e -> e.getHostType() == 3 )
+					.findFirst()
+					.map(q -> q.getMysqlHostName())
+					.get();
+		}else {
+			ghostHostName = entities.stream()
+					.filter(e -> e.getHostType() == 2 )
+					.findFirst()
+					.map(q -> q.getMysqlHostName())
+					.get();
+		}
+		
+
+		List<GhcModel> models = null;
+		try {
+			
+			models = targetMySQLRepository.checkErrors(ghostHostName, 3306, tableSchema, tableName);
+			
+			
+		}catch(NullPointerException ne) {
+			     
+			
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			
+		}
+		
+		
+		return models;
+	}
 	
 	
 }

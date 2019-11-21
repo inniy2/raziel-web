@@ -529,6 +529,73 @@ public class TargetMySQLRepository {
 		return rtn;
 	}
 
+	public List<GhcModel> checkErrors(String ghostHostName, int i, String tableSchema, String tableName) {
+		
+		logger.debug(tableName);
+		
+		Connection con = null;
+
+		List<GhcModel> result = new ArrayList<GhcModel>();
+		
+		try {
+			
+			
+			// Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection("jdbc:mysql://"+ghostHostName+":"+i+"/"+tableSchema,consoleMySQLUser,consoleMySQLpassword);
+			
+			
+			Statement stmt = con.createStatement();  
+			
+			
+			String sql = "select t.`id`, t.`last_update`, t.`hint`, t.`value` "
+					+ "from `"+tableName+"` t "
+					+ "where t.`value` like '%error%'";
+			
+			logger.debug(sql);
+			
+			ResultSet rs = stmt.executeQuery(sql);  
+			
+			while(rs.next()){
+				
+				GhcModel model = new GhcModel();
+				
+				model.setId(rs.getLong("id"));
+				model.setLastUpdate(rs.getTimestamp("last_update"));
+				model.setHint(rs.getString("hint"));
+				model.setValue(rs.getString("value"));
+				
+				logger.debug("-------------------------------------------------------------------");
+				logger.debug("GHC Host name: "+ ghostHostName);
+				logger.debug("GHC Table Schema: "+ tableSchema);
+				logger.debug("GHC Table Name: "+ tableName);
+				logger.debug("GHC id: "+ rs.getLong("id"));
+				logger.debug("GHC last update: "+ rs.getTimestamp("last_update"));
+				logger.debug("GHC hint: "+ rs.getString("hint"));
+				logger.debug("GHC value: "+ rs.getString("value"));
+				logger.debug("-------------------------------------------------------------------");
+				
+				result.add(model);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+		}finally{
+			
+			try {
+				con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+		return result;
+	}
+
 
 }
 
