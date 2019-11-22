@@ -554,6 +554,51 @@ class App extends Component {
     };
 
 
+    callAlterHist = () => {    
+
+        var alterHist = new XMLHttpRequest()
+
+        alterHist.open('GET', this.state.apiBaseUrl+'/ghost/findAlterHist')
+        alterHist.send();
+        
+
+        alterHist.addEventListener('load', () => {
+            console.log("addEventListener message alterHist : " + alterHist.responseText)
+            
+            this.setState(prevState => ({
+                graghOption : JSON.parse(alterHist.responseText)
+                /*
+                graghOption: {
+                    title:{
+                        text: "Alter - per day"
+                    },
+                    axisX: {
+                        valueFormatString: "MMM-DD",
+                        interval:1,
+                        intervalType: "day"
+                      },
+                    data: [
+                        {
+                            type: "line",
+                    
+                            dataPoints: [
+                                { x: new Date(2019, 0, 1), y: 1 },
+                                { x: new Date(2019, 0, 2), y: 2 },
+                                { x: new Date(2019, 0, 3), y: 3 },
+                                { x: new Date(2019, 0, 4), y: 4 },
+                                { x: new Date(2019, 0, 5), y: 5 },
+                                { x: new Date(2019, 0, 6), y: 6 },
+                                { x: new Date(2019, 0, 7), y: 7 }
+                            ]
+                    }]
+                }
+                */
+                
+            }))
+            
+
+        })
+    };
 
 
 
@@ -630,8 +675,10 @@ class App extends Component {
             })
         })
 
-    }
 
+        this.callAlterHist();
+
+    };
 
 
 
